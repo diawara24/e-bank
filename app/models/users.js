@@ -19,8 +19,15 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
-    },
+        required: true,
+        validate: {
+            validator: function (password) {
+                const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+                return passwordRegex.test(password);
+            },
+            message: 'Votre mot de passe est invalid'
+        }
+    }
 });
 
-const User = mongoose.model(User, userSchema);
+const User = mongoose.model('User', userSchema);

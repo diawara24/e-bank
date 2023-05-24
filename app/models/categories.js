@@ -7,4 +7,4 @@ const categorieSchema = new mongoose.Schema({
     }
 });
 
-const User = mongoose.model(Categorie, categorieSchema);
+const User = mongoose.model('Categorie', categorieSchema);
