@@ -32,11 +32,13 @@ const transactionSchema = new mongoose.Schema({
     },
     category: {
         type: Schema.Types.ObjectId,
-        ref: 'Categorie'
+        ref: 'Categorie',
+        required: [true, 'la catégorie associée est obligatoire']
     },
     accountId: {
         type: Schema.Types.ObjectId,
-        ref: 'Compte'
+        ref: 'Compte',
+        required: [true, 'le compte associé est obligatoire']
     }
 });
 
