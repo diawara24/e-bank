@@ -40,3 +40,14 @@ exports.delete = async (req, res) => {
         res.status(500).json(error || "serveur error");
     }
 }
+
+exports.get = async (req, res) => {
+    try {
+        const { idUser } = req.params;
+        let comptes = await Compte.find({userId: idUser})
+            .select('-userId -__v');
+        res.status(200).json(comptes);
+    } catch (error) {
+        res.status(500).json(error || "serveur error");
+    }
+}
