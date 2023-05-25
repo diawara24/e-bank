@@ -21,4 +21,6 @@ const compteSchema = new mongoose.Schema({
     }
 });
 
-const User = mongoose.model('Compte', compteSchema);
+const Compte = mongoose.model('Compte', compteSchema);
+
+module.exports = { Compte };

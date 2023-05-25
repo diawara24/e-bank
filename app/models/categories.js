@@ -7,4 +7,6 @@ const categorieSchema = new mongoose.Schema({
     }
 });
 
-const User = mongoose.model('Categorie', categorieSchema);
+const Categorie = mongoose.model('Categorie', categorieSchema);
+
+module.exports = { Categorie };
