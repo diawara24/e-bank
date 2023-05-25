@@ -1,0 +1,14 @@
+const Categorie = require('../models/categories.js');
+
+
+exports.add = (req, res) => {
+    
+}
+
+exports.update = (req, res) => {
+    
+}
+
+exports.delete = (req, res) => {
+    
+}

@@ -27,6 +27,11 @@ compteSchema.pre('save', async function (next) {
     next();
 });
 
+compteSchema.pre('updateOne', async function (next) {
+    this.lastUpdated = new Date()
+    next();
+});
+
 compteSchema.pre('deleteOne', async function (next) {
     await Transaction.deleteMany({ accountId: this._id}); 
     next();
