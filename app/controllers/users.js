@@ -5,11 +5,6 @@ const SECRET_KEY = process.env.SECRET_KEY
 
 exports.signup = async (req, res) => {
     try {
-        const user = await User.findOne({ email: req.body.email });
-        if (user) {
-            res.status(409).json('utilisateur existe déja');
-            return;
-        }
         const newUser = new User({ ...req.body });
         const insertedUser = await newUser.save();
 
