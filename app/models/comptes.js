@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Transaction = require('../models/transaction.js');
 const Schema = mongoose.Schema;
 
 const compteSchema = new mongoose.Schema({
@@ -20,6 +21,17 @@ const compteSchema = new mongoose.Schema({
         require: [true, "l'utilisateur du compte est obligatoire"]
     }
 });
+
+compteSchema.pre('save', async function (next) {
+    this.lastUpdated = new Date()
+    next();
+});
+
+compteSchema.pre('deleteOne', async function (next) {
+    await Transaction.deleteMany({ accountId: this._id}); 
+    next();
+});
+
 
 const Compte = mongoose.model('Compte', compteSchema);
 

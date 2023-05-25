@@ -1,9 +1,7 @@
 const Compte = require('../models/comptes.js');
-const Transaction = require('../models/transaction.js');
 
 exports.add = async (req, res) => {
     try {
-        req.body.lastUpdated = new Date();
         const newCompte = new Compte({ ...req.body });
         const insertedCompte = await newCompte.save();
         res.status(201).json(insertedCompte);
@@ -15,7 +13,6 @@ exports.add = async (req, res) => {
 exports.update = async (req, res) => {
     try {
         const { idUser, idCompte } = req.params;
-        req.body.lastUpdated = new Date();
         let compte = await Compte.findById(idCompte).
             populate({
                 path: 'userId',
@@ -37,7 +34,6 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
     try {
         const { id } = req.params;
-        await Transaction.deleteMany({ accountId: id}); 
         await Compte.deleteOne({_id: id});
         res.status(200).json("le compte a été supprimé")
     } catch (error) {
