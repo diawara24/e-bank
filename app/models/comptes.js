@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Transaction = require('../models/transaction.js');
 const Schema = mongoose.Schema;
 
 const compteSchema = new mongoose.Schema({
@@ -21,4 +22,22 @@ const compteSchema = new mongoose.Schema({
     }
 });
 
-const User = mongoose.model('Compte', compteSchema);
+compteSchema.pre('save', async function (next) {
+    this.lastUpdated = new Date()
+    next();
+});
+
+compteSchema.pre('updateOne', async function (next) {
+    this.lastUpdated = new Date()
+    next();
+});
+
+compteSchema.pre('deleteOne', async function (next) {
+    await Transaction.deleteMany({ accountId: this._id}); 
+    next();
+});
+
+
+const Compte = mongoose.model('Compte', compteSchema);
+
+module.exports =  Compte ;
