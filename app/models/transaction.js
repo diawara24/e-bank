@@ -13,13 +13,17 @@ const transactionSchema = new mongoose.Schema({
         enum: { values: ['débit', 'crédit'], message: 'type {VALUE} est invalide' },
         required: true
     },
+    statut: {
+        type: String,
+        enum: { values: ['A venir', 'déjà passé sur le compte'], message: 'Statut {VALUE} est invalide' },
+        required: true
+    },
     amount: {
         type: Number,
         required: [true, 'le montant est obligatoire']
     },
     paymentDate: {
-        type: Date,
-        required: [true, 'le date de paiment est obligatoire']
+        type: Date
     },
     paymentMethod: {
         type: String,
@@ -40,6 +44,11 @@ const transactionSchema = new mongoose.Schema({
         ref: 'Compte',
         required: [true, 'le compte associé est obligatoire']
     }
+});
+
+transactionSchema.pre('save', async function (next) {
+    this.paymentDate = new Date()
+    next();
 });
 
 const Transaction = mongoose.model('Transaction', transactionSchema);
